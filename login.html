@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Olx Login</title>
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+  <div class="login-container">
+    <img src="Olex logo.png" alt="OLX Logo" class="olx-logo">
+    <h2>Login</h2>
+    <form id="user-login">
+      <div class="field">
+        <input type="email" id="email"  placeholder="Email address" required>
+        <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+      </div>
+
+      <div class="field">
+        <input type="password" id="password" placeholder="Password" required>
+        <span class="icon"><i class="fa-solid fa-lock"></i></span>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-login"><i class="fa-solid fa-right-to-bracket"></i>Login</button>
+        <a href="registerd.html"  id="sign" class="btn btn-signup"><i class="fa-solid fa-user-plus"></i>Sign Up</a>
+      </div>
+
+      <div class="divider">or continue with</div>
+
+      <div class="socials">
+        <button type="button" class="social-btn google-btn">
+          <span class="g-logo">
+            <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="">
+          </span>
+          Continue with Google
+        </button>
+
+        <button type="button" class="social-btn facebook-btn">
+          <i class="fa-brands fa-facebook-f"></i> Continue with Facebook
+        </button>
+      </div>
+
+      <div class="forgot">
+        <a href="#" id="reset-btn" >Forgot Password?</a>
+      </div>
+    </form>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <script  type="module" src="login.js"></script> 
+</body>
+</html>

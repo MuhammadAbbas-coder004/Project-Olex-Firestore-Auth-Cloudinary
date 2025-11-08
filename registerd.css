@@ -1,0 +1,192 @@
+*,*::before,*::after{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  font-family:"Poppins",sans-serif;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+}
+
+/* Container */
+.signup-container{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:400px;
+  max-width:92%;
+  background:#fff;
+  border-radius:16px;
+  padding:35px 28px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+  text-align:center;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.signup-container:hover{
+  transform:translate(-50%,-50%) scale(1.01);
+  box-shadow:0 18px 40px rgba(0,0,0,0.15);
+}
+
+/* OLX logo */
+.olx-logo{
+  width:30%;
+  height:auto;
+  margin-bottom:8px;
+}
+
+h2{
+  color:#0f999e;
+  font-size:1.5rem;
+  font-weight:700;
+  margin-bottom:20px;
+}
+
+form{display:flex;flex-direction:column;gap:14px;text-align:left;}
+
+.field{
+  position:relative;
+}
+.field input[type="email"],
+.field input[type="password"]{
+  width:100%;
+  padding:12px 42px 12px 14px;
+  border:1.8px solid #e0e0e0;
+  border-radius:10px;
+  font-size:15px;
+  outline:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+.field input[type="email"]:focus,
+.field input[type="password"]:focus{
+  border-color:#0f999e;
+  box-shadow:0 0 6px rgba(15,153,158,0.25);
+}
+.field .icon{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#0f999e;
+  font-size:15px;
+}
+
+/* 🌟 Upload Profile Input styled via label */
+.upload-input {
+  display: none;
+}
+.upload-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 15px;
+  background: linear-gradient(135deg,#0f999e 0%, #12c2b6 100%);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(15,153,158,0.3);
+  transition: all 0.35s ease;
+  text-align: center;
+}
+.upload-label:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 25px rgba(15,153,158,0.4);
+  background: linear-gradient(135deg,#12c2b6 0%, #0f999e 100%);
+}
+.upload-label i {
+  font-size: 17px;
+  transition: transform 0.3s ease;
+}
+.upload-label:hover i {
+  transform: rotate(-15deg);
+}
+
+/* Sign Up Button */
+.btn-signup{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:11px;
+  border-radius:10px;
+  font-weight:600;
+  font-size:15px;
+  cursor:pointer;
+  border:none;
+  background:linear-gradient(180deg,#0f999e,#11b1a7);
+  color:#fff;
+  box-shadow:0 8px 20px rgba(15,153,158,0.25);
+  transition:transform .2s, box-shadow .2s;
+  margin-top:8px;
+}
+.btn-signup:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 25px rgba(15,153,158,0.3);
+}
+
+/* Divider */
+.divider{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#888;
+  font-size:13px;
+  margin:16px 0;
+}
+.divider::before,.divider::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:#ddd;
+}
+
+/* Social Buttons */
+.socials{display:flex;flex-direction:column;gap:10px;}
+.social-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:10px;
+  border-radius:8px;
+  font-weight:600;
+  font-size:14.5px;
+  border:1px solid #ddd;
+  background:#fff;
+  cursor:pointer;
+  transition:transform .2s, box-shadow .2s;
+}
+.social-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 15px rgba(0,0,0,0.1);
+}
+.g-logo{
+  width:28px;
+  height:28px;
+  flex:0 0 28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.g-logo img{
+  width:26px;
+  height:26px;
+  display:block;
+}
+.facebook-btn{
+  background:#1877f2;
+  color:#fff;
+  border:none;
+}
+
+@media(max-width:460px){
+  .signup-container{width:94%;padding:25px;}
+  h2{font-size:1.3rem;}
+  .btn-signup{font-size:14px;}
+  .upload-label{font-size:14px;}
+}

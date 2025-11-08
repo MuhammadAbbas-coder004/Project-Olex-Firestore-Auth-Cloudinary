@@ -1,0 +1,188 @@
+*,*::before,*::after{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family:"Poppins",sans-serif;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+    }
+
+    .login-container{
+      position:fixed;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      width:400px;
+      max-width:92%;
+      background:#fff;
+      border-radius:16px;
+      padding:35px 28px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.1);
+      text-align:center;
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .login-container:hover{
+      transform:translate(-50%,-50%) scale(1.01);
+      box-shadow:0 18px 40px rgba(0,0,0,0.15);
+    }
+
+    .olx-logo{
+      width:100px;
+      height:auto;
+      margin-bottom:8px;
+    }
+
+    h2{
+      color:#0f999e;
+      font-size:1.5rem;
+      font-weight:700;
+      margin-bottom:20px;
+    }
+
+    form{display:flex;flex-direction:column;gap:14px;text-align:left;}
+
+    .field{
+      position:relative;
+    }
+    .field input{
+      width:100%;
+      padding:12px 42px 12px 14px;
+      border:1.8px solid #e0e0e0;
+      border-radius:10px;
+      font-size:15px;
+      outline:none;
+      transition:border-color .2s, box-shadow .2s;
+    }
+    .field input:focus{
+      border-color:#0f999e;
+      box-shadow:0 0 6px rgba(15,153,158,0.25);
+    }
+    .field .icon{
+      position:absolute;
+      right:12px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#0f999e;
+      font-size:15px;
+    }
+
+
+#sign{
+text-decoration: none;
+
+
+}
+
+
+    .actions{
+      display:flex;
+      gap:12px;
+      margin-top:6px;
+    }
+    .btn{
+      flex:1;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:11px;
+      border-radius:10px;
+      font-weight:600;
+      font-size:15px;
+      cursor:pointer;
+      border:none;
+      transition:transform .2s, box-shadow .2s, background .2s;
+    }
+    .btn i{font-size:15px;}
+    .btn:active{transform:translateY(1px);}
+
+    .btn-login{
+      background:linear-gradient(180deg,#0f999e,#11b1a7);
+      color:#fff;
+      box-shadow:0 8px 20px rgba(15,153,158,0.25);
+    }
+    .btn-login:hover{transform:translateY(-2px);box-shadow:0 12px 25px rgba(15,153,158,0.3);}
+
+    .btn-signup{
+      background:transparent;
+      border:2px solid #0f999e;
+      color:#0f999e;
+    }
+    .btn-signup:hover{background:#0f999e;color:#fff;transform:translateY(-2px);}
+
+    /* Divider */
+    .divider{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#888;
+      font-size:13px;
+      margin:14px 0;
+    }
+    .divider::before,.divider::after{
+      content:"";
+      flex:1;
+      height:1px;
+      background:#ddd;
+    }
+
+    /* Social Buttons */
+    .socials{display:flex;flex-direction:column;gap:10px;}
+
+    .social-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:10px;
+      border-radius:8px;
+      font-weight:600;
+      font-size:14.5px;
+      border:1px solid #ddd;
+      background:#fff;
+      cursor:pointer;
+      transition:transform .2s, box-shadow .2s;
+    }
+    .social-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 6px 15px rgba(0,0,0,0.1);
+    }
+    .g-logo{
+      width:28px;
+      height:28px;
+      flex:0 0 28px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .g-logo img{
+      width:24px;
+      height:24px;
+      display:block;
+    }
+
+    .facebook-btn{
+      background:#1877f2;
+      color:#fff;
+      border:none;
+    }
+
+    .forgot{
+      margin-top:12px;
+      font-size:13px;
+    }
+    .forgot a{
+      color:#0f999e;
+      text-decoration:none;
+      font-weight:600;
+    }
+    .forgot a:hover{text-decoration:underline;}
+
+    @media(max-width:460px){
+      .login-container{width:94%;padding:25px;}
+      h2{font-size:1.3rem;}
+      .btn{font-size:14px;}
+    }
