@@ -178,12 +178,6 @@ form{display:flex;flex-direction:column;gap:14px;text-align:left;}
   height:26px;
   display:block;
 }
-.facebook-btn{
-  background:#1877f2;
-  color:#fff;
-  border:none;
-}
-
 @media(max-width:460px){
   .signup-container{width:94%;padding:25px;}
   h2{font-size:1.3rem;}

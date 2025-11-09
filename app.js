@@ -6,6 +6,7 @@ const upload = document.querySelector("#upload-btn");
 const login = document.querySelector("#login");
 const logoutbtn = document.querySelector("#logout");
 const userImg = document.querySelector("#userImg");
+const uploadbtn = document.querySelector("#upload-btn");
 
 login.addEventListener("click", (event) => {
   event.preventDefault();
@@ -59,3 +60,6 @@ logoutbtn.addEventListener("click", () => {
 
 
 
+uploadbtn.addEventListener("click" , () =>{
+window.location = "upload.html"; 
+})
