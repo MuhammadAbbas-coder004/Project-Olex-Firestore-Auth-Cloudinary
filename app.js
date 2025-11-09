@@ -7,6 +7,7 @@ const login = document.querySelector("#login");
 const logoutbtn = document.querySelector("#logout");
 const userImg = document.querySelector("#userImg");
 const uploadbtn = document.querySelector("#upload-btn");
+const procontainer = document.querySelector(".product-container");
 
 login.addEventListener("click", (event) => {
   event.preventDefault();
@@ -21,7 +22,33 @@ onAuthStateChanged(auth, async (user) => {
     logoutbtn.style.display = "block";
     upload.style.display = "block";
     userImg.style.display = "block";
-    await readformdata(uid);
+    console.log(allads);
+const userinfo =  await readformdata(uid , "users");
+userImg.src = userData[0].profile;
+const allads = await readformdata(null , "ads");
+
+allads.map((item , index)=>{
+procontainer.innerHTML += `  <div class="card">
+      <img src="${item.carImage}" alt="Product 1">
+      <div class="card-content">
+        <h3>${item.title}</h3>
+        <div class="price">$${item.price}</div>
+        <p>${item.discraption}</p>
+        <a href="#" class="more-btn"><i class="fa-solid fa-circle-info"></i> More Info</a>
+      </div>
+      <div class="card-footer">
+        <div class="location">
+          <i class="fa-solid fa-location-dot"></i> Lahore
+        </div>
+        <i class="fa-regular fa-heart favorite"></i>
+      </div>
+    </div>
+`
+
+
+})
+
+
   } else {
     login.style.display = "block";
     logoutbtn.style.display = "none";
@@ -39,7 +66,7 @@ async function readformdata(uid) {
   querySnapshot.forEach((doc) => {
     const userData = doc.data()
     if (userData.profile) {
-    userImg.src = userData.profile;
+    // userImg.src = userData.profile;
         userImg.style.display = "block";
         console.log("profile url" , userData.profile);
         
@@ -55,7 +82,6 @@ logoutbtn.addEventListener("click", () => {
       console.log(error, "error");
     });
 });
-
 
 
 
