@@ -43,7 +43,7 @@ createUserWithEmailAndPassword(auth, email.value, password.value)
         const docRef = await addDoc(collection(db, "users"), {
          email : email.value,
          password : password.value,
-          profile : uploadImage,
+         profile : uploadImage,
           uid: user.uid,
         });
         console.log("Document written with ID: ", docRef.id);

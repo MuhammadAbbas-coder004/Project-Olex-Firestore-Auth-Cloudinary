@@ -19,7 +19,7 @@ const title = document.querySelector("#title");
 const description = document.querySelector("#description");
 const price = document.querySelector("#price");
 
-form.addEventListener("submit" , (event) =>{
+form.addEventListener("submit" , async(event) =>{
 event.preventDefault();
 const carTitle = title.value;
 const carDesc =   description.value;
@@ -30,6 +30,16 @@ console.log(`description : ${carDesc}`);
 console.log(`price : $${carPrice}`);
 
 
-
+  try {
+    const docRef = await addDoc(collection(db, "ads"), {
+    
+    
+    
+    });
+    console.log("Document written with ID: ", docRef.id);
+    alert("ad published")
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
 })
 

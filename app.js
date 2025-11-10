@@ -8,6 +8,7 @@ const logoutbtn = document.querySelector("#logout");
 const userImg = document.querySelector("#userImg");
 const uploadbtn = document.querySelector("#upload-btn");
 const procontainer = document.querySelector(".product-container");
+const moreinfo = document.querySelectorAll(".more-btn");
 
 login.addEventListener("click", (event) => {
   event.preventDefault();
@@ -22,33 +23,33 @@ onAuthStateChanged(auth, async (user) => {
     logoutbtn.style.display = "block";
     upload.style.display = "block";
     userImg.style.display = "block";
-    console.log(allads);
-const userinfo =  await readformdata(uid , "users");
-userImg.src = userData[0].profile;
-const allads = await readformdata(null , "ads");
+ 
+const userInfo =  await  getDataFromDB(uid , "users");
+userImg.src = userInfo[0]?.profile || "default.jpg";
+console.log(userInfo);
 
-allads.map((item , index)=>{
-procontainer.innerHTML += `  <div class="card">
+const allAds = await  getDataFromDB(null, "ads"); 
+console.log(allAds);
+   console.log("profile url" , userInfo.profile); 
+allAds.map((item) => {
+  procontainer.innerHTML += `
+    <div class="card">
       <img src="${item.carImage}" alt="Product 1">
       <div class="card-content">
         <h3>${item.title}</h3>
         <div class="price">$${item.price}</div>
         <p>${item.discraption}</p>
-        <a href="#" class="more-btn"><i class="fa-solid fa-circle-info"></i> More Info</a>
+        <a href="#" data-id="${item.docid}" class="more-btn">
+          <i class="fa-solid fa-circle-info"></i> More Info
+        </a>
       </div>
       <div class="card-footer">
-        <div class="location">
-          <i class="fa-solid fa-location-dot"></i> Lahore
-        </div>
+        <div class="location"><i class="fa-solid fa-location-dot"></i> Lahore</div>
         <i class="fa-regular fa-heart favorite"></i>
       </div>
     </div>
-`
-
-
-})
-
-
+  `;
+});
   } else {
     login.style.display = "block";
     logoutbtn.style.display = "none";
@@ -57,21 +58,29 @@ procontainer.innerHTML += `  <div class="card">
     console.log("user is not login");
   }
 });
-async function readformdata(uid) {
+
+
+
+
+
+
+
+
+async function  getDataFromDB(uid, collections) {
+  const userdata = [];
   const q = query(
-    collection(db, "users"),
-    where("uid", "==", uid)
+    collection(db, collections), where("uid", "==", uid)
   );
- const querySnapshot = await getDocs(q);
+  const querySnapshot = uid
+    ? await getDocs(q)
+    : await getDocs(collection(db, collections));
   querySnapshot.forEach((doc) => {
-    const userData = doc.data()
-    if (userData.profile) {
     // userImg.src = userData.profile;
-        userImg.style.display = "block";
-        console.log("profile url" , userData.profile);
-        
-    }
+    // userImg.style.display = "block";
+            userdata.push({ ...doc.data(), docid: doc.id });
+
   });
+  return userdata;
 }
 logoutbtn.addEventListener("click", () => {
   signOut(auth)
