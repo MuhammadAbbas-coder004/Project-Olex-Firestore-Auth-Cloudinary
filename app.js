@@ -15,9 +15,9 @@ login.addEventListener("click", (event) => {
   window.location = "login.html";
 });
 
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    const uid = user.uid;
+onAuthStateChanged(auth, async (users) => {
+  if (users) {
+    const uid = users.uid;
     console.log(`User uid : ${uid}`);
     login.style.display = "none";
     logoutbtn.style.display = "block";
@@ -27,18 +27,18 @@ onAuthStateChanged(auth, async (user) => {
 const userInfo =  await  getDataFromDB(uid , "users");
 userImg.src = userInfo[0]?.profile || "default.jpg";
 console.log(userInfo);
+const allAds = await  getDataFromDB(null, "ads");
 
-const allAds = await  getDataFromDB(null, "ads"); 
 console.log(allAds);
-   console.log("profile url" , userInfo.profile); 
+
 allAds.map((item) => {
   procontainer.innerHTML += `
     <div class="card">
-      <img src="${item.carImage}" alt="Product 1">
+      <img class="carimg" src="${item.carImage}" alt="Product 1">
       <div class="card-content">
-        <h3>${item.title}</h3>
-        <div class="price">$${item.price}</div>
-        <p>${item.discraption}</p>
+        <h3>${item.carTitle}</h3>
+        <div class="price">$${item.carPrice}</div>
+        <p>${item.carDesc}</p>
         <a href="#" data-id="${item.docid}" class="more-btn">
           <i class="fa-solid fa-circle-info"></i> More Info
         </a>
@@ -75,10 +75,7 @@ async function  getDataFromDB(uid, collections) {
     ? await getDocs(q)
     : await getDocs(collection(db, collections));
   querySnapshot.forEach((doc) => {
-    // userImg.src = userData.profile;
-    // userImg.style.display = "block";
-            userdata.push({ ...doc.data(), docid: doc.id });
-
+  userdata.push({ ...doc.data(), docid: doc.id });
   });
   return userdata;
 }

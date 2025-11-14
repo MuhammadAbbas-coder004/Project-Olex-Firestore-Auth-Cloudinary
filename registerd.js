@@ -1,72 +1,94 @@
-import {  createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
-import { auth } from "./config.js";
-import {collection,
-addDoc
-} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js"; 
-import { db } from "./config.js";
+// 🔹 Firebase imports
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+import { auth, db } from "./config.js";
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
+// 🔹 Cloudinary upload setup
+let uploadImage = null;
 
-let uploadImage;
-var myWidget = cloudinary.createUploadWidget({
-  cloudName: 'dptuo3qjf', 
-  uploadPreset: 'user_img',
-}, 
-  (error, result) => { 
-    if (!error && result && result.event === "success") { 
-      console.log('Done! Here is the image info: ', result.info); 
-      uploadImage = result.info.secure_url
+const myWidget = cloudinary.createUploadWidget(
+  {
+    cloudName: "dptuo3qjf", 
+    uploadPreset: "user_img",
+  },
+  (error, result) => {
+    if (!error && result && result.event === "success") {
+      console.log("✅ Image uploaded:", result.info.secure_url);
+      uploadImage = result.info.secure_url;
+      Swal.fire({
+        icon: "success",
+        text: "Profile image uploaded successfully!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
     }
   }
-)
+);
 
-document.getElementById("upload_profile").addEventListener(
-  "click", 
-  function(){
-    myWidget.open();
-  }, false);
+document.getElementById("upload_profile").addEventListener("click", () => {
+  myWidget.open();
+});
 
-
-
-
-
-const regsterForm = document.querySelector("#form");
+// 🔹 Form handling
+const registerForm = document.querySelector("#form");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
 
-regsterForm.addEventListener("submit" , (event)=>{
-event.preventDefault();
-createUserWithEmailAndPassword(auth, email.value, password.value)
-.then(async(userCredential) => {
+registerForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  // 🔸 Validation checks
+  if (!email.value || !password.value) {
+    return Swal.fire({
+      icon: "warning",
+      text: "Please fill in all fields.",
+    });
+  }
+
+  if (!uploadImage) {
+    return Swal.fire({
+      icon: "warning",
+      text: "Please upload a profile image before registering.",
+    });
+  }
+
+  try {
+    // 🔹 Create Firebase user
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email.value,
+      password.value
+    );
     const user = userCredential.user;
-    console.log(user);
-          try { 
-        const docRef = await addDoc(collection(db, "users"), {
-         email : email.value,
-         password : password.value,
-         profile : uploadImage,
-          uid: user.uid,
-        });
-        console.log("Document written with ID: ", docRef.id);
-        window.location = "login.html"
-      } 
-      
-      catch (e) {
-        console.error("Error adding document: ", e);
-      }
-    })
-    
+    console.log("✅ User created:", user.uid);
+
+    // 🔹 Save user data to Firestore
+    await addDoc(collection(db, "users"), {
+      email: email.value,
+      profile: uploadImage,
+      uid: user.uid,
+      createdAt: new Date().toISOString(),
+    });
+
+    // 🔹 Success message
+    await Swal.fire({
+      icon: "success",
+      title: "Registration Successful!",
+      text: "Your account has been created.",
+      confirmButtonText: "Go to Login",
+    });
+
+    window.location = "login.html";
+  } catch (error) {
+    console.error("❌ Error:", error.message);
+
     Swal.fire({
-  text: "Your Email Regestred",
-  icon: "success"
+      icon: "error",
+      title: "Registration Failed",
+      text:
+        error.code === "auth/email-already-in-use"
+          ? "This email is already registered."
+          : error.message,
+    });
+  }
 });
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorMessage);
-    Swal.fire({
-  icon: "error",
-  title: "Oops...",
-  text: "This Email Already Registred",
-});
-  });
