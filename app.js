@@ -7,12 +7,10 @@ const logoutbtn = document.querySelector("#logout");
 const userImg = document.querySelector("#userImg");
 const uploadbtn = document.querySelector("#upload-btn");
 const procontainer = document.querySelector(".product-container");
-
 login.addEventListener("click", (event) => {
   event.preventDefault();
   window.location = "login.html";
 });
-
 onAuthStateChanged(auth, async (users) => {
   if (users) {
     const uid = users.uid;
