@@ -1,9 +1,9 @@
-// 🔹 Firebase imports
+
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 import { auth, db } from "./config.js";
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
-// 🔹 Cloudinary upload setup
+
 let uploadImage = null;
 
 const myWidget = cloudinary.createUploadWidget(
@@ -13,7 +13,7 @@ const myWidget = cloudinary.createUploadWidget(
   },
   (error, result) => {
     if (!error && result && result.event === "success") {
-      console.log("✅ Image uploaded:", result.info.secure_url);
+      console.log("Image uploaded:", result.info.secure_url);
       uploadImage = result.info.secure_url;
       Swal.fire({
         icon: "success",
@@ -27,17 +27,14 @@ const myWidget = cloudinary.createUploadWidget(
 
 document.getElementById("upload_profile").addEventListener("click", () => {
   myWidget.open();
-});
-
-// 🔹 Form handling
+})
 const registerForm = document.querySelector("#form");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
 
 registerForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-
-  // 🔸 Validation checks
+  
   if (!email.value || !password.value) {
     return Swal.fire({
       icon: "warning",
@@ -53,24 +50,19 @@ registerForm.addEventListener("submit", async (event) => {
   }
 
   try {
-    // 🔹 Create Firebase user
+
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email.value,
       password.value
     );
     const user = userCredential.user;
-    console.log("✅ User created:", user.uid);
-
-    // 🔹 Save user data to Firestore
+    console.log(" User created:", user.uid);
     await addDoc(collection(db, "users"), {
       email: email.value,
       profile: uploadImage,
       uid: user.uid,
-      createdAt: new Date().toISOString(),
-    });
-
-    // 🔹 Success message
+    })
     await Swal.fire({
       icon: "success",
       title: "Registration Successful!",
@@ -80,7 +72,7 @@ registerForm.addEventListener("submit", async (event) => {
 
     window.location = "login.html";
   } catch (error) {
-    console.error("❌ Error:", error.message);
+    console.error("Error:", error.message);
 
     Swal.fire({
       icon: "error",
