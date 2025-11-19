@@ -76,7 +76,6 @@ textarea {
   min-height: 80px;
 }
 
-/* Stylish File Upload Button */
 .custom-file-upload {
   display: inline-flex;
   align-items: center;
@@ -111,7 +110,7 @@ textarea {
   display: none;
 }
 
-/* Submit Button */
+
 button[type="submit"] {
   padding: 12px 0;
   border-radius: 10px;

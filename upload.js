@@ -36,8 +36,6 @@ if(fileInput){
     myWidget.open();
   });
 }
-
-// CHECK AUTH
 onAuthStateChanged(auth, (user) => {
   if (user) {
     currantuid = user.uid;

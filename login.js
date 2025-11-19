@@ -1,48 +1,62 @@
-import {signInWithEmailAndPassword,sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
-  import { auth } from "./config.js";
-  const loginForm = document.querySelector("#user-login");
-  const loginEmail = document.querySelector("#email");
-  const loginPassword = document.querySelector("#password");
+import { 
+  signInWithEmailAndPassword, 
+  sendPasswordResetEmail,
+  signInWithPopup
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 
+import { auth, provider, db } from "./config.js";
+import { setDoc, doc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+const loginForm = document.querySelector("#user-login");
+const loginEmail = document.querySelector("#email");
+const loginPassword = document.querySelector("#password");
 
-
-  loginForm.addEventListener("submit" , (event)=>{
+loginForm.addEventListener("submit", (event) => {
   event.preventDefault();
-signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
-  .then((userCredential) => {
-    const user = userCredential.user;
-  console.log(user);
-  window.location = "index.html";
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorMessage);
-  Swal.fire({
-  icon: "error",
-  title: "Oops...",
-  text: "Please Register The Account",
+
+  signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
+    .then((userCredential) => {
+      console.log(userCredential.user);
+      window.location = "index.html";
+    })
+    .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please Register The Account",
+      });
+    });
 });
-    
-  });
-  })
 const resetbtn = document.querySelector("#reset-btn");
-resetbtn.addEventListener("click" ,()=>{
-sendPasswordResetEmail(auth, prompt("Enter your email"))
-.then(() => {
-Swal.fire({
-text: "Please Check Your Email To Reset Your Password",
-icon: "success",
+
+resetbtn.addEventListener("click", () => {
+  const email = prompt("Enter your email");
+
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      Swal.fire({
+        text: "Please Check Your Email To Reset Your Password",
+        icon: "success",
+      });
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 });
-console.log("email send");
+const googleBtn = document.querySelector(".google-btn");
+googleBtn.addEventListener("click", () => {
+  signInWithPopup(auth, provider)
+    .then(async (result) => {
+      const user = result.user;
 
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-   console.log(errorMessage);
-  });
+      await setDoc(doc(db, "users", user.uid), {
+        name: user.displayName,
+        email: user.email,
+        profile: user.photoURL,
+        uid: user.uid
+      });
+      window.location = "index.html";
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 });
-
-
-

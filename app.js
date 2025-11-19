@@ -1,7 +1,6 @@
 import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 import { auth, db } from "./config.js";
 import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
-
 const upload = document.querySelector("#upload-btn");
 const login = document.querySelector("#login");
 const logoutbtn = document.querySelector("#logout");
@@ -29,7 +28,7 @@ onAuthStateChanged(auth, async (users) => {
 
     const allAds = await getDataFromDB(null, "ads");
 
-    procontainer.innerHTML = ""; // clear container before adding
+    procontainer.innerHTML = ""; 
 
     allAds.map((item) => {
       procontainer.innerHTML += `
@@ -50,8 +49,6 @@ onAuthStateChanged(auth, async (users) => {
         </div>
       `;
     });
-
-    // More Info button click functionality
     const moreInfoBtns = document.querySelectorAll(".more-btn");
     moreInfoBtns.forEach(btn => {
       btn.addEventListener("click", (event) => {
