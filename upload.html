@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="upload-container">
-    <img  id="olx-logo"  src="logo png.png" alt="">
+    <img id="olx-logo" src="logo png.png" alt="">
     <h2><i class="fa-solid fa-car"></i> Upload Car Listing</h2>
     <form id="form">
       <div class="input-group">
@@ -27,6 +27,12 @@
         <input type="number" id="price" name="price" placeholder="Enter price" required />
       </div>
 
+      <!-- ✅ City input added -->
+      <div class="input-group">
+        <label for="location">City</label>
+        <input type="text" id="location" name="location" placeholder="Enter city (e.g., Karachi)" required />
+      </div>
+
       <div class="input-group">
         <label for="image">Car Image</label>
         <label class="custom-file-upload">
@@ -38,8 +44,9 @@
       <button type="submit">Create Listing</button>
     </form>
   </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
-<script type="module" src="./upload.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+  <script type="module" src="./upload.js"></script>
 </body>
 </html>

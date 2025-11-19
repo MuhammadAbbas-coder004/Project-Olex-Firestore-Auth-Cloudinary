@@ -8,6 +8,7 @@ const logoutbtn = document.querySelector("#logout");
 const userImg = document.querySelector("#userImg");
 const uploadbtn = document.querySelector("#upload-btn");
 const procontainer = document.querySelector(".product-container");
+
 login.addEventListener("click", (event) => {
   event.preventDefault();
   window.location = "login.html";
@@ -28,7 +29,7 @@ onAuthStateChanged(auth, async (users) => {
 
     const allAds = await getDataFromDB(null, "ads");
 
-    console.log(allAds);
+    procontainer.innerHTML = ""; // clear container before adding
 
     allAds.map((item) => {
       procontainer.innerHTML += `
@@ -43,11 +44,22 @@ onAuthStateChanged(auth, async (users) => {
             </a>
           </div>
           <div class="card-footer">
-            <div class="location"><i class="fa-solid fa-location-dot"></i> Lahore</div>
+            <div class="location"><i class="fa-solid fa-location-dot"></i>${item.location || "Unknown"}</div>
             <i class="fa-regular fa-heart favorite"></i>
           </div>
         </div>
       `;
+    });
+
+    // More Info button click functionality
+    const moreInfoBtns = document.querySelectorAll(".more-btn");
+    moreInfoBtns.forEach(btn => {
+      btn.addEventListener("click", (event) => {
+        event.preventDefault();
+        const id = btn.dataset.id;
+        localStorage.setItem("itemID", id);
+        window.location = "detail.html";
+      });
     });
 
   } else {
@@ -58,6 +70,7 @@ onAuthStateChanged(auth, async (users) => {
     console.log("user is not login");
   }
 });
+
 async function getDataFromDB(uid, collections) {
   const userdata = [];
   let querySnapshot;

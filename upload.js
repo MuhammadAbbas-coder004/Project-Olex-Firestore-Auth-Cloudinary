@@ -2,6 +2,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.4.0/fi
 import { auth } from "./config.js";
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 import { db } from "./config.js";
+
 let currantuid;
 let uploadimg;
 const myWidget = cloudinary.createUploadWidget(
@@ -12,9 +13,6 @@ const myWidget = cloudinary.createUploadWidget(
   (error, result) => {
     if (!error && result && result.event === "success") {
       uploadimg = result.info.secure_url;
-      console.log("Image uploaded:", uploadimg);
-
-
       Swal.fire({
         icon: "success",
         title: "Success",
@@ -23,16 +21,15 @@ const myWidget = cloudinary.createUploadWidget(
         showConfirmButton: false,
       });
     } else if (error) {
-      console.error("Cloudinary error:", error);
       Swal.fire({
         icon: "error",
         title: "Error",
         text: "Error uploading image!",
       });
+      console.error("Cloudinary error:", error);
     }
   }
 );
-
 const fileInput = document.getElementById("image");
 if(fileInput){
   fileInput.addEventListener("click", () => {
@@ -40,18 +37,16 @@ if(fileInput){
   });
 }
 
-
+// CHECK AUTH
 onAuthStateChanged(auth, (user) => {
   if (user) {
     currantuid = user.uid;
     console.log("Logged in UID:", currantuid);
   } else {
     window.location = "login.html";
-    console.log("User not logged in, redirecting...");
   }
 });
-
-const form = document.querySelector("#form");
+const form = document.getElementById("form");
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -67,18 +62,19 @@ form.addEventListener("submit", async (event) => {
   const carTitle = document.getElementById("title").value;
   const carDescription = document.getElementById("description").value;
   const carPrice = document.getElementById("price").value;
+  const carLocation = document.getElementById("location").value;
 
   try {
     const docRef = await addDoc(collection(db, "ads"), {
       carTitle,
       carDescription,
       carPrice,
+      location: carLocation,
       carImage: uploadimg,
       uid: currantuid,
       createdAt: new Date()
     });
 
-    console.log("Document written with ID:", docRef.id);
     Swal.fire({
       icon: "success",
       title: "Success",
